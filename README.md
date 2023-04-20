@@ -33,26 +33,97 @@ SocialGift es una plataforma que permite interactuar con listas de regalos y mie
 ## Gestion usuarios
 
 - registrar Usuario
+POST /users
+
 - iniciar Sesión
-- verrar Sesión
+GET /login?login=pepito&password=menganito
+POST /login
+{
+  login: pepito
+  password: menganito
+}
+
+- cerrar Sesión
+nada y borrar el token en el cliente, ya que es RESTful.
+POST /logout
+header 
+{
+  Authorization: Bearer TOKEN 
+}
+
 - ver Perfil
+GET /users/ID
+GET /users/@me
+GET /profile
+
+
 - editar Perfil
+PUT /users/ID <- verificar que soy
+PUT /users/@me <- verificar que soy?
+PUT /profile (cogeré el id del header Atuhentication: Bearer TOKEN)
 
 ## Interacción con usuarios
 
 - buscar usuario por correo
-- ver perfil de usuario
+GET /users?search=email@acme.com
+<!-- GET /users?pageSize=10
+GET /gifts?pageSize=10
+GET /gifts?search=nombre_de_la_empresa&campo=empresa
+GET /users/search/email@acme.com
+GET /gifts/search/nombre de la empresa -->
+
+- ver perfil de usuario (de otro usuario)
+GET /users/ID
+
 - enviar solicitud de amistad (opcional)
 - aceptar o rechazar solicitud de amistad (opcional)
-- obtiene todas las listas de deseos del usuario
-- obtiene todos los regalos reservados por el ususario
+- ver todas las listas de deseos del usuario
+GET /wishlists?iduser=ID <-- meh
+GET /users/ID/wishlists
+
+- obtiene todos los regalos reservados p or el ususario
+GET /users/ID/reservedgifts 
+GET /users/ID/gifts/reserved <----- api oficial
+GET /users/ID/gifts?reserved <----- yuri
+GET /users/ID/gifts?reserved=true
 
 ## Gestion de la lista de regalos y regalos
 
 - crear lista de regalos
+
+POST /wishlist
+{
+  id
+  id_user
+  name
+  description
+  created_at
+  finished_at
+}
+
+POST /users/ID/wishlist
+{
+  name
+  description
+  finished_at
+}
+
+
 - editar lista de regalos
+PUT /users/:IDU/wishlist/:IDW
+{
+  name: "Lista de PS5",
+  //description: "---",
+}
+
+
 - eliminar lista de regalos
 - visualizar listas de regalos
+GET /wishlists <<--todas
+
+GET /wishlists/ID
+GET /wishlists/ID/gifts
+
 - crear regalos
 - editar regalos
 - eliminar regalos
@@ -73,6 +144,45 @@ TBD
 
 ## Base de datos
 
-TBD
+USERS
+id
+name
+last_name
+email
+password
+image
+
+WISHLIST
+id
+id_user
+name
+description
+created_at
+finished_at
+
+1|54|Lista con PS5 y nada más|---|hoy|25/DIC
+
+WISHLIST_GIFT
+id
+id_wishlist
+id_gift
+quantity
+
+1|1|5
+2|1|5
+3|1|5
+
+BOOKED//RESERVATION//
+id
+id_user
+id_gift
+
+
+<!--
+GIFT
+id
+wishlist_i
+-->
+
 
 
