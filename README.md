@@ -81,6 +81,8 @@ PUT /profile (cogeré el id del header Atuhentication: Bearer TOKEN)
 ```
 ✔️
 GET /users?search=email@acme.com
+GET /users?s=email@acme.com
+GET /users?q=email@acme.com
 
 <!-- 
 GET /users?pageSize=10
@@ -99,8 +101,36 @@ GET /gifts/search/nombre de la empresa
 GET /users/ID
 ```
 
+- listar amigos
+```
+GET users/ID/friends
+GET users/@me/friends
+
+GET /friends
+obtener el id del token id
+```
+
+- listar peticiones de amistad
+```
+GET users/ID/friends/requests
+
+GET /friends/requests
+obtener el id del token id
+``` 
+
 - enviar solicitud de amistad (opcional)
+```
+POST /friends/id
+token id extraemos el usuario que pide peticion de amistad.
+```
 - aceptar o rechazar solicitud de amistad (opcional)
+PUT /friends/id
+```
+
+
+
+```
+
 - ver todas las listas de deseos del usuario
 ```
 😐
@@ -126,7 +156,7 @@ GET /users/ID/gifts?reserved=true
 - crear lista de regalos
 ```
 😐
-POST /wishlist
+POST /wishlists
 {
   id
   id_user
@@ -138,8 +168,8 @@ POST /wishlist
 ```
 
 ```
-✔️
-POST /users/ID/wishlist
+😐
+POST /users/ID/wishlists
 {
   name
   description
@@ -150,7 +180,7 @@ POST /users/ID/wishlist
 
 - editar lista de regalos
 ```
-PUT /users/:IDU/wishlist/:IDW
+PUT /users/:IDU/wishlists/:IDW
 {
   name: "Lista de PS5",
   //description: "---",
@@ -158,6 +188,14 @@ PUT /users/:IDU/wishlist/:IDW
 ```
 
 - eliminar lista de regalos
+
+```
+😐
+DELETE /wishlists/:ID
+✔️
+DELETE /users/:IDU/wishlists/:IDW
+```
+
 - visualizar listas de regalos
 
 ```
@@ -172,17 +210,133 @@ GET /wishlists/ID/gifts
 ```
 
 - crear regalos
+```
+✔️
+POST /gifts/
+{
+  wishlistid
+  url
+  priority
+}
+✔️
+POST /users/ID/wishlist/ID/gifts
+{
+  url
+  priority
+}
+
+BULK INSERT:
+POST /users/ID/wishlist/ID/gifts
+{
+  [
+    {
+      url,
+      priority    
+    },
+    {
+      url,
+      priority
+    }
+  ]
+}
+
+
+```
+
+
 - editar regalos
+```
+PUT /users/IDU/wishlist/IDW/gifts/IDR
+{
+  prioridad o url o booked
+}
+
+PUT /gifts/IDR
+{
+  prioridad o url o booked
+}
+
+```
+
+
 - eliminar regalos
-- visualizar regalos
+```
+DELETE /users/IDU/wishlist/IDW/gifts/IDR
+DELETE /gifts/IDR
+
+```
+
+- ver regalos
+- ver todos los regalos?
+```
+GET /gifts
+```
+
+- ver todos los regalos de una wishlist:
+
+```
+GET /users/IDU/wishlist/IDW/gifts/IDR
+
+DELETE /users/IDU/wishlist/IDW/gifts/IDR
+DELETE /gifts/IDR
+
+DELETE /users/IDU/wishlist/IDW/gifts/IDR
+DELETE /gifts/IDR
+```
+
+
 - visualizar usuario que ha reservado regalo
+
+## Reservas
+
+- Hacer una reserva:
+```
+POST /gifts/ID/reservation
+el que hace la reserva es el id del user del token auteticado
+
+PUT /gifts/ID
+{
+  id_user_booked: miid
+}
+```
+
+- Eliminar reserva
+```
+DELETE /gifts/ID/reservation
+el que hace la reserva es el id del user del token auteticado
+
+PUT /gifts/ID
+{
+  id_user_booked: null
+}
+
+```
 
 ## Mensajería con usuarios (opcional)
 
-- enviar mensaje
+- enviar mensaje a alguien ---> desconocido o tiene que ser un amigo?
+
+```
+POST /messages
+{
+  // id_sent: 54,
+  id_user: 33,
+  message: "🦄?"
+}
+el que envia el mensaje lo podemos extraer de el token. 
+```
+
 - visualizar mensajes intercanviados
+
+GET /messages/ ?¿ from
+
 - visualizar usuarios con quien se ha comunicado
-- recibir mensajes
+
+GET /users?filter=chat
+
+- recibir mensajes ???
+
+GET /messages ¿? from
 
 
 ## Casos de uso
@@ -214,6 +368,7 @@ id
 id_wishlist
 id_gift
 quantity
+priority
 
 1|1|5
 2|1|5
@@ -225,11 +380,21 @@ id_user
 id_gift
 
 
-<!--
 GIFT
 id
-wishlist_i
--->
+wishlist id
+product id
+product url
+priority
+~~booked~~ user_id_booked 
+
+MESSAGES
+id,
+id_user_from,
+id_user_to,
+message,
+created_at,
+
 
 
 
