@@ -95,8 +95,8 @@ GET /gifts/search/nombre de la empresa
 ```
 
 - ver perfil de usuario (de otro usuario)
-``
-GET /users/ID`
+```
+GET /users/ID
 ```
 
 - enviar solicitud de amistad (opcional)
