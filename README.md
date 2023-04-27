@@ -345,55 +345,71 @@ TBD
 
 ## Base de datos
 
-USERS
-id
-name
-last_name
-email
-password
-image
+| USERS |
+| --- |
+|id|
+| name |
+| last_name |
+| email |
+| password |
+| image |
 
-WISHLIST
-id
-id_user
-name
-description
-created_at
-finished_at
+| WISHLIST |
+| --- |
+| id |
+| id_user |
+| name |
+| description |
+| created_at |
+| finished_at |
 
-1|54|Lista con PS5 y nada más|---|hoy|25/DIC
-
-WISHLIST_GIFT
-id
-id_wishlist
-id_gift
-quantity
-priority
-
-1|1|5
-2|1|5
-3|1|5
-
-BOOKED//RESERVATION//
-id
-id_user
-id_gift
+| GIFT (WISHLIST_PRODUCTS) |
+| --- |
+| id |
+| id_wishlist |
+| id_product |
+| url_product |
+| priority |
+| ~~booked~~ user_id_booked  |
 
 
-GIFT
-id
-wishlist id
-product id
-product url
-priority
-~~booked~~ user_id_booked 
+<!-- | WISHLIST_GIFT |
+| --- |
+| id |
+| id_wishlist |
+| id_gift |
+| quantity |
+| priority | -->
 
-MESSAGES
-id,
-id_user_from,
-id_user_to,
-message,
-created_at,
+<!-- | BOOKED//RESERVATION// | 
+| --- |
+| id | 
+| id_user | 
+| id_gift |  -->
+
+
+| MESSAGES |
+| --- |
+| id, |
+| id_user_from, |
+| id_user_to, |
+| message, |
+| created_at, |
+
+| FRIENDSHIP |
+| --- |
+| id |
+| id_user_from |
+| id_user_to |
+| status | 
+| created_at |
+
+```
+null: pendiente,
+true: accepted,
+false: rejected,
+...
+```
 
 
 
